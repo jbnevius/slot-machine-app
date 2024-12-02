@@ -113,7 +113,7 @@ const printRows = (rows) => {
     }
 };
 
-
+// Checks to see if user won 
 const getWinnings = (rows, bet, lines) => {
     let winnings = 0;
     for (let row = 0; row < lines; row++) {
@@ -135,12 +135,33 @@ const getWinnings = (rows, bet, lines) => {
     return winnings;
 };
 
+// Allows the user to play multiple rounds or cash out
+const game = () => {
+    let balance = deposit();    
 
-let balance = deposit();
-const numberOfLines = getNumberOfLines();
-const bet = getBet(balance, numberOfLines);
-const reels = spin();
-const rows = transpose(reels);
-printRows(rows);
-const winnings = getWinnings(rows, bet, numberOfLines);
-console.log("You won, $" + winnings.toString());
+    while (true) {
+        console.log("You have a balance of $" + balance);
+        const numberOfLines = getNumberOfLines();
+        const bet = getBet(balance, numberOfLines);
+        balance -= bet * numberOfLines;
+        const reels = spin();
+        const rows = transpose(reels);
+        printRows(rows);
+        const winnings = getWinnings(rows, bet, numberOfLines);
+        balance += winnings;
+        console.log("You won, $" + winnings.toString());
+
+        // Lets the user know that they can no longer play since they're out of money
+        if (balance <= 0) {
+            console.log("You ran out of money!")
+            break;
+        }
+        // Lets the user select to play again if they still have enough funds deposited
+        const playAgain = prompt("Do you want to play again? (y/n)") 
+            if (playAgain != "y") break;
+    }
+
+};
+
+game();
+
