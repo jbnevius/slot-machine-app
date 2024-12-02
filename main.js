@@ -10,7 +10,7 @@ const SYMBOLS_COUNT = {
     "B": 4,
     "C": 6,
     "D": 8
-}
+};
 
 // Global variable that sets key-value multiplier 
 const SYMBOL_VALUES = {
@@ -18,7 +18,7 @@ const SYMBOL_VALUES = {
     "B": 4,
     "C": 3,
     "D": 2
-}
+};
 
 // Allows the user to deposit money
 const deposit = () => {
@@ -60,7 +60,7 @@ const getBet = (balance, lines) => {
             return numberBet;
         }
     }
-}
+};
 
 // This block enables a slot spin with the ability to randomize indexes based on the global variables set above
 const spin = () => {
@@ -114,9 +114,33 @@ const printRows = (rows) => {
 };
 
 
+const getWinnings = (rows, bet, lines) => {
+    let winnings = 0;
+    for (let row = 0; row < lines; row++) {
+        const symbols = rows[row];
+        let allSame = true;
+        
+        for (const symbol of symbols) {
+            if (symbol != symbols[0]) {
+                allSame = false;
+                break;
+            }
+        }
+
+        if (allSame) {
+            winnings += bet * SYMBOL_VALUES[symbols[0]]
+        }
+    }
+
+    return winnings;
+};
+
+
 let balance = deposit();
 const numberOfLines = getNumberOfLines();
 const bet = getBet(balance, numberOfLines);
 const reels = spin();
 const rows = transpose(reels);
 printRows(rows);
+const winnings = getWinnings(rows, bet, numberOfLines);
+console.log("You won, $" + winnings.toString());
