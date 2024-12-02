@@ -21,7 +21,6 @@ const SYMBOL_VALUES = {
 }
 
 // Allows the user to deposit money
-
 const deposit = () => {
     while (true) {
         const depositAmount = prompt("Enter a deposit amount: ");
@@ -36,7 +35,6 @@ const deposit = () => {
 };
 
 // Lets the user select the number of lines they'd like to bet on between 1 - 3 
-
 const getNumberOfLines = () => {
     while (true) {
         const lines = prompt("Enter the number of lines you'd like to bet on (1-3): ");
@@ -51,7 +49,6 @@ const getNumberOfLines = () => {
 };
 
 // Collects the bet amount, but prohibits user from exceeding their balance 
-
 const getBet = (balance, lines) => {
     while (true) {
         const bet = prompt("Enter the total bet: ");
@@ -74,8 +71,9 @@ const spin = () => {
         }
     }
 
-    const reels = [[], [], []];
+    const reels = [[]];
     for (let i =0; i < COLS; i++) {
+        reels.push([]);
         const reelSymbols = [...symbols];
         for (let j = 0; j < ROWS; j++) {
             const randomIndex = Math.floor(Math.random() * reelSymbols.length);
